@@ -1,7 +1,10 @@
+from checkexpect.core import checkExpect
+
 # ! to do list:
 # - __str__ funcs for classes
 # - make sure message formatting is correct
 # - unit tests!!
+# - type hints for functions
 
 #------------------------------------- Data Definitions -------------------------------------#
 
@@ -33,7 +36,11 @@ class Piece:
         self.type = type
 
     def __str__(self):
-        pass
+        return f"{'mo' if self.side=='m' else 'zaha'} {self.type}"
+# Examples
+z_army = Piece("z","army")
+m_camp = Piece("m","camp")
+m_tower = Piece("m","tower")
 
 # A Tile is a Tile(Nat, Nat, Terrain, [Union None Piece])
 # - where x is the tile's x-position (left is 0)
@@ -49,7 +56,7 @@ class Tile:
         self.color = "light" if x%2==y%2 else "dark"
 
     def __str__(self):
-        pass
+        return f"{self.terrain} tile with {'no' if self.piece==None else str(self.piece)} piece"
 
 
 #-------------------------------------- Draw Functions --------------------------------------#
@@ -63,7 +70,7 @@ class Tile:
 # board_to_message
 # takes a casashee board state and returns a message made of custom emoji representing the board,
 # using the emoji name->id dictionary to supply emoji ids based on name
-def board_to_message(board, id_dict):
+def board_to_message(board, id_dict) -> str:
     message = ""
     for row in board:
         for tile in row:
@@ -75,18 +82,23 @@ def board_to_message(board, id_dict):
 
 # tile_to_emoji_name
 # takes a tile and, using naming rules above, returns the matching custom emoji name
-def tile_to_emoji_name(tile):
+def tile_to_emoji_name(t: Tile) -> str:
     # default terrain is normal
-    terrain_name = "" if tile.terrain=="normal" else tile.terrain
-    color_name = tile.color
+    terrain_name = "" if t.terrain=="normal" else t.terrain
+    color_name = t.color
     # empty tiles don't need piece description
-    piece_name = "" if tile.piece==None else piece_to_emoji_name(tile.piece)
+    piece_name = "" if t.piece==None else piece_to_emoji_name(t.piece)
 
     return terrain_name + color_name + piece_name
 
-def piece_to_emoji_name(piece):
-    side_name = piece.side
+# piece_to_emoji_name
+# takes a piece and, using naming rules above, returns a string to be used in a tile's custom emoji name
+def piece_to_emoji_name(p: Piece) -> str:
+    side_name = p.side
     # default piece type is army
-    type_name = "" if piece.type=="army" else piece.type
+    type_name = "" if p.type=="army" else p.type
 
     return side_name + type_name
+checkExpect(piece_to_emoji_name, z_army, "z")
+checkExpect(piece_to_emoji_name, m_camp, "mcamp")
+checkExpect(piece_to_emoji_name, m_tower, "mtower")
