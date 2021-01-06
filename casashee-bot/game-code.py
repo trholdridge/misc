@@ -1,3 +1,8 @@
+# ! to do list:
+# - __str__ funcs for classes
+# - make sure message formatting is correct
+# - unit tests!!
+
 #------------------------------------- Data Definitions -------------------------------------#
 
 # A Terrain is one of:
