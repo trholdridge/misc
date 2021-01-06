@@ -1,3 +1,5 @@
+#------------------------------------- Data Definitions -------------------------------------#
+
 # A Terrain is one of:
 # - "normal"
 # - "hill"
@@ -31,12 +33,27 @@ class Piece:
 # A Tile is a Tile(Terrain, [Union None Piece])
 # - where terrain signifies the type of tile
 # - piece indicates the piece on the tile (or None if it is empty)
-# and represents one square of a Casashee board
+# and represents one square of a casashee board
 class Tile:
 
-    def __init__(self, terrain, piece=None):
+    def __init__(self, terrain="normal", piece=None):
         self.terrain = terrain
         self.piece = piece
 
     def __str__(self):
         pass
+
+
+#-------------------------------------- Draw Functions --------------------------------------#
+
+# Explanation of emoji names:
+# - each emoji is identified by the tile terrain & color (light or dark), and the piece on it
+# - ordering: terrain + color + piece side + piece type
+# - terrain and piece type are excluded if default ("normal" and "army," respectively)
+# - color is excluded for capitals (which are always dark). piece info is excluded if no piece
+
+# tile_to_emoji_name
+# takes a tile and, using naming rules above, returns the matching custom emoji name
+
+# board_to_message
+# takes a casashee board state and returns a message made of custom emoji representing the board
