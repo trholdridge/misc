@@ -30,15 +30,18 @@ class Piece:
     def __str__(self):
         pass
 
-# A Tile is a Tile(Terrain, [Union None Piece])
-# - where terrain signifies the type of tile
-# - piece indicates the piece on the tile (or None if it is empty)
+# A Tile is a Tile(Nat, Nat, Terrain, [Union None Piece])
+# - where x is the tile's x-position (left is 0)
+# - y is the tile's y-position (top is 0)
+# - terrain signifies the type of tile
+# - piece represents the piece on the tile (or None if it is empty)
 # and represents one square of a casashee board
 class Tile:
 
-    def __init__(self, terrain="normal", piece=None):
+    def __init__(self, x, y, terrain="normal", piece=None):
         self.terrain = terrain
         self.piece = piece
+        self.color = "light" if x%2==y%2 else "dark"
 
     def __str__(self):
         pass
@@ -52,8 +55,33 @@ class Tile:
 # - terrain and piece type are excluded if default ("normal" and "army," respectively)
 # - color is excluded for capitals (which are always dark). piece info is excluded if no piece
 
+# board_to_message
+# takes a casashee board state and returns a message made of custom emoji representing the board,
+# using the emoji name->id dictionary to supply emoji ids based on name
+def board_to_message(board, id_dict):
+    message = ""
+    for row in board:
+        for tile in row:
+            emoji_name = tile_to_emoji_name(tile)
+            message += f"<:{emoji_name}:{id_dict[emoji_name]}>"
+        message += "\n" # create next row of tiles
+
+    return message
+
 # tile_to_emoji_name
 # takes a tile and, using naming rules above, returns the matching custom emoji name
+def tile_to_emoji_name(tile):
+    # default terrain is normal
+    terrain_name = "" if tile.terrain=="normal" else tile.terrain
+    color_name = tile.color
+    # empty tiles don't need piece description
+    piece_name = "" if tile.piece==None else piece_to_emoji_name(tile.piece)
 
-# board_to_message
-# takes a casashee board state and returns a message made of custom emoji representing the board
+    return terrain_name + color_name + piece_name
+
+def piece_to_emoji_name(piece):
+    side_name = piece.side
+    # default piece type is army
+    type_name = "" if piece.type=="army" else piece.type
+
+    return side_name + type_name
