@@ -29,21 +29,4 @@ async def on_ready():
     for key, value in emoji_id_dict.items():
         print(key + ": " + value)
 
-# define all types of squares -- normal, hill, and capital
-N, H, C = "normal","hill","capital"
-
-# define all types of pieces -- army, camp, tower
-A, C, T = "army","camp","tower"
-
-# holds the current state of a casashee game
-current_game_state = np.zeros((5,5))
-
-# starting state of a casashee game
-initial_game_state = [[]]
-
-# game_state_to_message
-# takes a 2d array of characters representing the state of a square on the board,
-# and converts this to the appropriate visual representation of the board
-# def game_state_to_message(state):
-
 client.run(TOKEN)
