@@ -57,7 +57,36 @@ class Tile:
 
     def __str__(self):
         return f"{self.terrain} tile with {'no' if self.piece==None else str(self.piece)} piece"
+# Examples
+normal_m_camp = Tile(0,0,piece=m_camp)
+capital = Tile(5,2,"capital")
+hill_z = Tile(2,4,"hill",z_army)
 
+# A Board is a 2d list of Tiles
+# Examples:
+initial_board = []
+for r in range(6):
+    initial_board.append([])
+    for c in range(6):
+        temp_tile = Tile(r,c)
+
+        if r==0:
+            # add pieces to each side's first row
+            temp_tile.piece = Piece("m")
+            # add the capital to the correct tile
+            if c==3: temp_tile.terrain = "capital"
+        elif r==5:
+            # add pieces to each side's first row
+            temp_tile.piece = Piece("z")
+            # add the capital to the correct tile
+            if c==2: temp_tile.terrain = "capital"
+        # add hills to the correct tiles
+        elif r==2:
+            if c==2 or c==5: temp_tile.terrain = "hill"
+        elif r==3:
+            if c==0 or c==3: temp_tile.terrain = "hill"
+
+        initial_board[r].append(temp_tile)
 
 #-------------------------------------- Draw Functions --------------------------------------#
 
@@ -65,7 +94,7 @@ class Tile:
 # - each emoji is identified by the tile terrain & color (light or dark), and the piece on it
 # - ordering: terrain + color + piece side + piece type
 # - terrain and piece type are excluded if default ("normal" and "army," respectively)
-# - color is excluded for capitals (which are always dark). piece info is excluded if no piece
+# - piece info is excluded if no piece
 
 # board_to_message
 # takes a casashee board state and returns a message made of custom emoji representing the board,
@@ -99,6 +128,12 @@ def piece_to_emoji_name(p: Piece) -> str:
     type_name = "" if p.type=="army" else p.type
 
     return side_name + type_name
-checkExpect(piece_to_emoji_name, z_army, "z")
-checkExpect(piece_to_emoji_name, m_camp, "mcamp")
-checkExpect(piece_to_emoji_name, m_tower, "mtower")
+
+
+# checkExpect(tile_to_emoji_name,normal_m_camp,"lightmcamp")
+# checkExpect(tile_to_emoji_name,capital,"capitaldark")
+# checkExpect(tile_to_emoji_name,hill_z,"hilllightz")
+#
+# checkExpect(piece_to_emoji_name, z_army, "z")
+# checkExpect(piece_to_emoji_name, m_camp, "mcamp")
+# checkExpect(piece_to_emoji_name, m_tower, "mtower")
