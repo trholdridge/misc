@@ -1,11 +1,7 @@
-from checkexpect.core import checkExpect
-
 # ! to do list:
-# - __str__ funcs for classes
 # - make sure message formatting is correct
 # - unit tests!!
-# - type hints for functions
-
+ 
 #------------------------------------- Data Definitions -------------------------------------#
 
 # A Terrain is one of:
@@ -88,6 +84,7 @@ for r in range(6):
 
         initial_board[r].append(temp_tile)
 
+
 #-------------------------------------- Draw Functions --------------------------------------#
 
 # Explanation of emoji names:
@@ -130,10 +127,10 @@ def piece_to_emoji_name(p: Piece) -> str:
     return side_name + type_name
 
 
-# checkExpect(tile_to_emoji_name,normal_m_camp,"lightmcamp")
-# checkExpect(tile_to_emoji_name,capital,"capitaldark")
-# checkExpect(tile_to_emoji_name,hill_z,"hilllightz")
-#
-# checkExpect(piece_to_emoji_name, z_army, "z")
-# checkExpect(piece_to_emoji_name, m_camp, "mcamp")
-# checkExpect(piece_to_emoji_name, m_tower, "mtower")
+#-------------------------------------- Move Functions --------------------------------------#
+
+# move_piece
+# move a piece from original Tile to target Tile
+
+# camp_switch
+# camp an army or uncamp a camp
